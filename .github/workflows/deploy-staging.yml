@@ -1,0 +1,51 @@
+name: Deploy Config Server
+
+on:
+  push:
+    branches:
+      - develop
+      - staging
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for Gradle Wrapper
+        run: chmod +x ./gradlew
+
+      - name: Run build and tests + generate coverage
+        run: ./gradlew clean build jacocoTestReport --no-daemon
+
+      - name: Verify coverage on changed files
+        uses: madrapps/jacoco-report@v1.3
+        with:
+          min-coverage-overall: 85
+          min-coverage-changed-files: 85
+          report-path: build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Railway CLI
+        run: npm install -g railway
+
+      - name: Authenticate with Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway login --token $RAILWAY_TOKEN
+
+      - name: Deploy to Railway (develop)
+        if: github.ref == 'refs/heads/develop'
+        run: railway up --service=configserver-dev --detach
+
+      - name: Deploy to Railway (staging)
+        if: github.ref == 'refs/heads/staging'
+        run: railway up --service=configserver-staging --detach
