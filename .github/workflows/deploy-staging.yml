@@ -26,13 +26,15 @@ jobs:
       - name: Run build and tests + generate coverage
         run: ./gradlew clean build jacocoTestReport --no-daemon
 
-      - name: Verify coverage on changed files
+      - name: Report Jacoco Coverage
         uses: madrapps/jacoco-report@v1.3
         with:
+          paths: build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 85
           min-coverage-changed-files: 85
-          report-path: build/reports/jacoco/test/jacocoTestReport.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 🧪 Coverage Jacoco
+          update-comment: true
 
       - name: Install Railway CLI
         run: npm install -g railway
