@@ -36,18 +36,17 @@ jobs:
           title: 🧪 Coverage Jacoco
           update-comment: true
 
-      - name: Install Railway CLI
-        run: npm install -g railway
-
-      - name: Authenticate with Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway login --token $RAILWAY_TOKEN
+      - name: Install Railway CLI (modern)
+        run: npm install -g @railway/cli
 
       - name: Deploy to Railway (develop)
         if: github.ref == 'refs/heads/develop'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: railway up --service=configserver-dev --detach
 
       - name: Deploy to Railway (staging)
         if: github.ref == 'refs/heads/staging'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: railway up --service=configserver-staging --detach
