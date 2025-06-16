@@ -43,10 +43,10 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service=configserver-dev --detach
+        run: railway up --service=authentication-server-dev --detach
 
       - name: Deploy to Railway (staging)
         if: github.ref == 'refs/heads/staging'
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service=configserver-staging --detach
+        run: railway up --service=authentication-server-staging --detach
