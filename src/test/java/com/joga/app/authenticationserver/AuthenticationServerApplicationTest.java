@@ -15,6 +15,9 @@ import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 @ExtendWith(MockitoExtension.class)
 class AuthenticationServerApplicationTest {
-
+    @Test
+    void contextLoads() {
+        assertDoesNotThrow(() -> AuthenticationServerApplication.main(new String[]{}));
+    }
 
 }

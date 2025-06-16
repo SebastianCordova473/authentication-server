@@ -22,7 +22,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @ExtendWith(MockitoExtension.class)
 class ConfigServerDecryptClientTest {
 
-    public static final String HTTP_LOCALHOST_8888_DECRYPT = "http://localhost:8888/decrypt";
+    public static final String HTTP_LOCALHOST_8888_DECRYPT = "https://config-server-develop.up.railway.app/decrypt";
     private ConfigServerDecryptClient client;
     private MockRestServiceServer mockServer;
     private RestTemplate restTemplate;
