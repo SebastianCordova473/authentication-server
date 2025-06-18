@@ -38,7 +38,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation('org.springframework.boot:spring-boot-starter-web') {
+		exclude group: 'org.springframework', module: 'spring-websocket'
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-json'
+		exclude group: 'org.hibernate.validator', module: 'hibernate-validator'
+	}
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
 	implementation 'org.springframework.security:spring-security-oauth2-jose'
@@ -58,4 +63,8 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+configurations.all {
+	exclude group: 'org.hibernate.validator', module: 'hibernate-validator'
 }
