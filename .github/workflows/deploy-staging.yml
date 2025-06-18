@@ -1,4 +1,4 @@
-name: Deploy Config Server
+name: Deploy Authentication Server
 
 on:
   push:
