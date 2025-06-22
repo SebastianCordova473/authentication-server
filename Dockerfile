@@ -17,7 +17,7 @@ WORKDIR /app
 
 COPY --from=builder /app/build/libs/authentication-server-0.0.1-SNAPSHOT.jar app.jar
 
-# Limitar memoria
+# Limit memory usage
 ENV JAVA_OPTS="-Xms256m -Xmx512m"
 
 EXPOSE 8090
