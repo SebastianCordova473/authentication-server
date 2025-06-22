@@ -22,7 +22,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @ExtendWith(MockitoExtension.class)
 class ConfigServerDecryptClientTest {
 
-    public static final String HTTP_LOCALHOST_8888_DECRYPT = "https://config-server-develop.up.railway.app/decrypt";
+    public static final String CONFIG_SERVER_DECRYPT_URL = "https://config-server-develop.up.railway.app/decrypt";
     private ConfigServerDecryptClient client;
     private MockRestServiceServer mockServer;
     private RestTemplate restTemplate;
@@ -54,7 +54,7 @@ class ConfigServerDecryptClientTest {
         String input = "{cipher}secret";
         String expected = "my-password";
 
-        mockServer.expect(once(), requestTo(HTTP_LOCALHOST_8888_DECRYPT))
+        mockServer.expect(once(), requestTo(CONFIG_SERVER_DECRYPT_URL))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(expected, MediaType.TEXT_PLAIN));
 
@@ -69,7 +69,7 @@ class ConfigServerDecryptClientTest {
         String encryptedValue = "{cipher}my-encrypted";
         String expectedDecryptedValue = "my-decrypted";
 
-        mockServer.expect(once(), requestTo(HTTP_LOCALHOST_8888_DECRYPT))
+        mockServer.expect(once(), requestTo(CONFIG_SERVER_DECRYPT_URL))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(expectedDecryptedValue, MediaType.TEXT_PLAIN));
 
