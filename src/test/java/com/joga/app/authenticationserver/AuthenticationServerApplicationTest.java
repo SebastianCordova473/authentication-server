@@ -15,8 +15,8 @@ class AuthenticationServerApplicationTest {
     void test(){
         try (MockedStatic<SpringApplication> mocked = mockStatic(SpringApplication.class)) {
 
-            mocked.when(() -> { SpringApplication.run(AuthenticationServerApplication.class,
-                    "foo", "bar"); })
+            mocked.when(() -> SpringApplication.run(AuthenticationServerApplication.class,
+                    "foo", "bar"))
                 .thenReturn(Mockito.mock(ConfigurableApplicationContext.class));
 
             AuthenticationServerApplication.main(new String[] { "foo", "bar" });
